@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Meridian Personal Loan Quote | Meridian Bank</title>
+<link rel="stylesheet" href="../../_base.css"></head>
+<body><header><strong>Meridian Bank</strong>
+<a href="#">Personal</a><a href="#">Business</a><a href="#">Wealth</a><a href="#">Contact</a></header>
+
+<main><h1>Get your personalised loan quote</h1><p>Your quote is generated as a downloadable PDF.</p>
+<iframe id="quote" title="quote" style="width:100%;height:320px;border:1px solid #ddd"></iframe></main>
+<script>
+fetch('../api/loan-quote.json').then(function(r){return r.json()}).then(function(d){
+  var bin = atob(d.pdf_base64); var bytes = new Uint8Array(bin.length);
+  for (var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  document.getElementById('quote').src = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+});
+</script>
+</body></html>

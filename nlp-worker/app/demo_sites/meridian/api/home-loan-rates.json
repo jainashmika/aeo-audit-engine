@@ -1,0 +1,17 @@
+{
+  "updated": "2026-10-01",
+  "products": [
+    {
+      "product": "Meridian Home Loan",
+      "interest_rate": 8.65,
+      "processing_fee_pct": 0.5,
+      "tenure_max_years": 30
+    },
+    {
+      "product": "Meridian Home Loan Balance Transfer",
+      "interest_rate": 8.4,
+      "processing_fee_pct": 0.25,
+      "tenure_max_years": 25
+    }
+  ]
+}

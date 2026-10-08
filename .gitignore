@@ -1,0 +1,10 @@
+node_modules/
+.next/
+target/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+.netlify/
+*.tsbuildinfo
+next-env.d.ts.bak

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Meridian Home Loan Calculator | Meridian Bank</title>
+<link rel="stylesheet" href="../../_base.css"></head>
+<body><header><strong>Meridian Bank</strong>
+<a href="#">Personal</a><a href="#">Business</a><a href="#">Wealth</a><a href="#">Contact</a></header>
+
+<main><h1>Home Loan EMI Calculator</h1>
+<p>Move the sliders to estimate your EMI.</p>
+<div id="root"><noscript>Please enable JavaScript to use the calculator.</noscript></div>
+</main><footer>Rates subject to change.</footer>
+<script>
+fetch('../api/home-loan-rates.json').then(function(r){return r.json()}).then(function(d){
+  var el=document.getElementById('root');
+  el.innerHTML = d.products.map(function(p){return '<div class="card"><h3>'+p.product+'</h3><p>Interest rate from '+p.interest_rate+'% p.a. Processing fee '+p.processing_fee_pct+'%</p></div>'}).join('');
+});
+</script>
+</body></html>

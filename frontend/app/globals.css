@@ -1,0 +1,138 @@
+@import "@fontsource-variable/fraunces/full.css";
+@import "@fontsource-variable/fraunces/full-italic.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource/ibm-plex-sans-condensed/400.css";
+@import "@fontsource/ibm-plex-sans-condensed/500.css";
+@import "@fontsource/ibm-plex-sans-condensed/600.css";
+@import "react-reflex/styles.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Broadsheet (default, light) ---------- */
+:root {
+  --paper: 246 241 231;   /* #F6F1E7 newsprint */
+  --sheet: 236 228 211;   /* #ECE4D3 index column */
+  --ink: 29 27 24;        /* #1D1B18 */
+  --soft: 94 87 76;       /* #5E574C */
+  --rule: 201 190 169;    /* #C9BEA9 */
+  --accent: 243 166 147;  /* #F3A693 salmon pink */
+  --tint: 251 225 216;    /* #FBE1D8 */
+  --alert: 158 43 58;     /* #9E2B3A claret: stale, failing */
+  --truth: 31 99 87;      /* #1F6357 verdigris: ground truth, passing */
+  --kw: 158 43 58;
+  --str: 31 99 87;
+  --num: 122 78 0;
+  --fn: 61 58 140;
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-body: "Fraunces Variable", Georgia, serif;
+  --font-ui: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+  --radius: 0px;
+  color-scheme: light;
+}
+
+/* ---------- Darcula (IntelliJ specification) ---------- */
+[data-theme="darcula"] {
+  --paper: 43 43 43;      /* #2B2B2B main panels */
+  --sheet: 60 63 65;      /* #3C3F41 sidebars & toolbars */
+  --ink: 169 183 198;     /* #A9B7C6 variables */
+  --soft: 128 128 128;    /* #808080 comments */
+  --rule: 81 86 88;       /* #515658 */
+  --accent: 204 120 50;   /* #CC7832 keywords */
+  --tint: 33 66 131;      /* #214283 selection */
+  --alert: 188 63 60;     /* #BC3F3C */
+  --truth: 106 135 89;    /* #6A8759 strings */
+  --kw: 204 120 50;       /* #CC7832 */
+  --str: 106 135 89;      /* #6A8759 */
+  --num: 104 151 187;     /* #6897BB */
+  --fn: 255 198 109;      /* #FFC66D method calls */
+  --font-display: "JetBrains Mono Variable", "Fira Code", monospace;
+  --font-body: "JetBrains Mono Variable", "Fira Code", monospace;
+  --font-ui: "Inter Variable", system-ui, sans-serif;
+  --radius: 3px;
+  color-scheme: dark;
+}
+
+html, body { height: 100%; }
+body {
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* broadsheet paper grain, only in the light theme */
+:root:not([data-theme="darcula"]) body {
+  background-image: radial-gradient(rgb(var(--rule) / 0.18) 0.6px, transparent 0.6px);
+  background-size: 5px 5px;
+}
+
+::selection { background: rgb(var(--accent) / 0.55); }
+:focus-visible { outline: 2px solid rgb(var(--alert)); outline-offset: 2px; }
+
+.ui { font-family: var(--font-ui); }
+.tabnum { font-variant-numeric: tabular-nums lining-nums; }
+.hairline { border-color: rgb(var(--rule)); }
+.double-rule { border-top: 3px double rgb(var(--ink)); }
+[data-theme="darcula"] .double-rule { border-top: 1px solid rgb(var(--rule)); }
+
+.headline { font-family: var(--font-display); font-variation-settings: "SOFT" 30, "WONK" 1; letter-spacing: -0.015em; }
+[data-theme="darcula"] .headline { letter-spacing: 0; font-variation-settings: normal; }
+
+.dropcap::first-letter {
+  font-family: var(--font-display); float: left; font-size: 3.6em; line-height: 0.82;
+  padding: 0.06em 0.08em 0 0; font-variation-settings: "SOFT" 100, "WONK" 1; color: rgb(var(--alert));
+}
+[data-theme="darcula"] .dropcap::first-letter { float: none; font-size: inherit; padding: 0; color: rgb(var(--fn)); }
+
+/* ticker tape */
+@keyframes tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.tape { animation: tape 60s linear infinite; }
+.tape:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .tape { animation: none; } }
+
+/* resizable panes */
+.reflex-container > .reflex-splitter { background: rgb(var(--rule)); border: 0 !important; }
+.reflex-container.horizontal > .reflex-splitter { height: 3px; }
+.reflex-container.vertical > .reflex-splitter { width: 3px; }
+.reflex-container > .reflex-splitter:hover, .reflex-container > .reflex-splitter.active { background: rgb(var(--accent)); }
+
+/* code viewer */
+.code { font-family: "JetBrains Mono Variable", "Fira Code", monospace; font-size: 12.5px; line-height: 1.6; }
+.code .k { color: rgb(var(--kw)); }
+.code .s { color: rgb(var(--str)); }
+.code .n { color: rgb(var(--num)); }
+.code .f { color: rgb(var(--fn)); }
+.code .c { color: rgb(var(--soft)); font-style: italic; }
+
+.scroll-thin { scrollbar-width: thin; scrollbar-color: rgb(var(--rule)) transparent; }
+
+/* table */
+.ledger th { font-family: var(--font-ui); font-weight: 500; text-align: left; color: rgb(var(--soft)); font-size: 12px; padding: 6px 10px; border-bottom: 1px solid rgb(var(--ink)); }
+.ledger td { padding: 7px 10px; border-bottom: 1px solid rgb(var(--rule)); vertical-align: top; }
+.ledger tr:hover td { background: rgb(var(--tint) / 0.5); }
+
+.btn {
+  font-family: var(--font-ui); font-size: 13px; font-weight: 500; padding: 6px 12px;
+  border: 1px solid rgb(var(--ink)); border-radius: var(--radius); background: transparent; color: rgb(var(--ink));
+}
+.btn:hover { background: rgb(var(--ink)); color: rgb(var(--paper)); }
+.btn-solid { background: rgb(var(--ink)); color: rgb(var(--paper)); }
+.btn-solid:hover { background: rgb(var(--alert)); border-color: rgb(var(--alert)); }
+.btn:disabled { opacity: .45; cursor: progress; }
+[data-theme="darcula"] .btn { border-color: rgb(var(--rule)); background: rgb(var(--sheet)); }
+[data-theme="darcula"] .btn:hover { background: rgb(var(--tint)); color: rgb(var(--ink)); }
+[data-theme="darcula"] .btn-solid { background: rgb(54 88 128); border-color: rgb(54 88 128); color: #fff; }
+
+.field {
+  font-family: var(--font-body); font-size: 15px; padding: 7px 10px; background: rgb(var(--paper));
+  border: 1px solid rgb(var(--ink)); border-radius: var(--radius); color: rgb(var(--ink)); width: 100%;
+}
+[data-theme="darcula"] .field { border-color: rgb(var(--rule)); background: rgb(var(--sheet)); font-size: 13px; }
+
+/* Darcula sets display type in monospace; scale the newspaper headline sizes down to editor proportions */
+[data-theme="darcula"] h2.headline { font-size: clamp(22px, 2.1vw, 30px) !important; line-height: 1.25 !important; font-weight: 600; }
+[data-theme="darcula"] .dropcap, [data-theme="darcula"] main p { font-size: 14px; }

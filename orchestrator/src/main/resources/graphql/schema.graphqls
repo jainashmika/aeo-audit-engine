@@ -1,0 +1,38 @@
+# GraphQL surface of the orchestration API (GraphiQL at /graphiql)
+type Query {
+  institutions: [Institution!]!
+  entities(institution: String!): [Entity!]!
+  jobs(limit: Int = 20): [Job!]!
+  schedules: [Schedule!]!
+}
+
+type Mutation {
+  runValidation: ID!
+  scheduleScrape(institution: String!, url: String!, entity: String, namespace: String, intervalMinutes: Int = 60): ID!
+}
+
+type Institution { slug: String! name: String! domain: String entities: Int pages: Int }
+
+type Entity {
+  id: ID!
+  slug: String!
+  entity_name: String!
+  namespace_type: String!
+  entity_kind: String!
+  claims: Int
+  text_nodes: Int
+  attributes: [String!]
+}
+
+type Job { id: ID! kind: String! status: String! created_at: String finished_at: String }
+
+type Schedule {
+  id: ID!
+  institution_slug: String!
+  url: String!
+  entity_slug: String
+  interval_minutes: Int!
+  enabled: Boolean!
+  last_run_at: String
+  next_run_at: String
+}

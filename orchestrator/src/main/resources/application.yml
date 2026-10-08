@@ -1,0 +1,50 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: aeo-orchestrator
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/aeo}
+    username: ${SPRING_DATASOURCE_USERNAME:aeo}
+    password: ${SPRING_DATASOURCE_PASSWORD:aeo}
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+  graphql:
+    graphiql:
+      enabled: true
+    path: /graphql
+  servlet:
+    multipart:
+      max-request-size: 10MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+aeo:
+  worker-url: ${AEO_WORKER_URL:http://localhost:8000}
+  webhook-secret: ${AEO_WEBHOOK_SECRET:change-me}
+  scheduler:
+    tick-ms: ${AEO_SCHEDULER_TICK_MS:60000}
+  demo-base-url: ${DEMO_BASE_URL:http://localhost:8000/demo-sites}
+  default-schedules:
+    - institution: meridian
+      path: meridian/etf/nifty-dividend-etf.html
+      entity: meridian-nifty-dividend-etf
+      namespace: Retail
+      interval-minutes: 60
+    - institution: meridian
+      path: meridian/loans/home-loan-calculator.html
+      entity: meridian-home-loan
+      namespace: Retail
+      interval-minutes: 180
+    - institution: kaveri
+      path: kaveri/etf/kaveri-gold-etf.html
+      entity: kaveri-gold-etf
+      namespace: Institutional
+      interval-minutes: 240

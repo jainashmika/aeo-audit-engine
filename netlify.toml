@@ -1,0 +1,26 @@
+# Netlify deploys the dashboard (frontend/). The Python worker, Spring Boot orchestrator and
+# PostgreSQL are long-running services and run elsewhere (Docker, Render, Railway, a VM...).
+#
+#  * No API_URL set  -> the site serves a bundled, read-only snapshot of real engine output.
+#  * API_URL set     -> /api/* is proxied at runtime to that engine, e.g. https://aeo-api.example.com
+#    (Site configuration > Environment variables > API_URL, then redeploy).
+
+[build]
+  base    = "frontend"
+  command = "npm run build"
+  publish = ".next"
+  # Build production from main only; other branches and pull requests are skipped.
+  ignore  = "if [ \"$BRANCH\" = \"main\" ]; then exit 1; else exit 0; fi"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_TELEMETRY_DISABLED = "1"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
